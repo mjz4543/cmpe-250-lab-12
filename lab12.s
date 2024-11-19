@@ -584,6 +584,27 @@ GetCharDequeueLoop
 
 ;-------------------------------------------------------------------------------
 
+IsKeyPressed	PROC	{R1-R14}
+;------------------------------------------------;
+; IRQ handler for the PIT. If RunTimer is set,   ;
+; the counter increments, otherwise it does not. ;
+; Interrupt cleared on exit.                     ;
+;------------------------------------------------;
+
+		PUSH	{}
+		
+		LDR		R0,=RxQueueRecord
+		LDRB	R0,[R0,NUM_ENQD]
+		CMP		R0,#0
+		BLE				
+		
+		POP		{}
+		BX		LR
+		
+		ENDP
+
+;-------------------------------------------------------------------------------
+
 PutChar		PROC	{R0-R14}
 ;------------------------------------------------;
 ; An ISR-driven transmit: returns a character    ;
