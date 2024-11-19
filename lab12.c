@@ -94,6 +94,8 @@ char RandomLEDColor(void){
 //***********************************************
 // Function that maps color commands to ints.
 // Params: char c
+// Function that maps color commands to ints.
+// Params: char c
 // Returns: int
 //***********************************************
 int ColToInt(char c) {
@@ -131,5 +133,15 @@ void InitLEDGPIO(void){
 }
 
 void AddScore(int TimeElapsed, int RoundNumber){
+	/* Turn off red LED */
+	FPTB->PSOR = PORTB_LED_RED_MASK;
+	/* Turn off green LED */
+	FPTB->PSOR = PORTB_LED_GREEN_MASK;
+	/* Turn off blue LED */
+	FPTB->PSOR = PORTB_LED_BLUE_MASK;
+}
+
+void AddScore(int TimeElapsed, int RoundNumber){
 	
 }
+
