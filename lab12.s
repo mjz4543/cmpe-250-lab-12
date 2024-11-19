@@ -311,6 +311,8 @@ UART0_S2_NO_RXINV_BRK10_NO_LBKDETECT_CLEAR_FLAGS  EQU  \
 		EXPORT	UART0_IRQHandler
 		EXPORT	PIT_IRQHandler
 		EXPORT	Dequeue
+		EXPORT	IsKeyPressed
+		EXPORT	ToUpperChar
 ;>>>>> begin subroutine code <<<<<
 
 UART0_IRQHandler
@@ -586,19 +588,20 @@ GetCharDequeueLoop
 
 IsKeyPressed	PROC	{R1-R14}
 ;------------------------------------------------;
-; IRQ handler for the PIT. If RunTimer is set,   ;
-; the counter increments, otherwise it does not. ;
-; Interrupt cleared on exit.                     ;
+; Checks if a keyboard key is pressed. If it is, ;
+; returns a non-zero boolean value.              ;
 ;------------------------------------------------;
-
-		PUSH	{}
 		
 		LDR		R0,=RxQueueRecord
-		LDRB	R0,[R0,NUM_ENQD]
+		LDRB	R0,[R0,#NUM_ENQD]
 		CMP		R0,#0
-		BLE				
-		
-		POP		{}
+		BGT		QueueNotEmpty
+QueueEmpty
+		MOVS	R0,#0x00
+		B		IsKeyPressedEnd
+QueueNotEmpty
+		MOVS	R0,#0xFF
+IsKeyPressedEnd
 		BX		LR
 		
 		ENDP

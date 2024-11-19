@@ -32,10 +32,11 @@
 
 /*********************************************************************/
 
-// put functions here
-int ColToInt(char c);
+// put globals here
 
 int RandomNumber;
+int Score;
+
 //***********************************************
 // Main function.
 // Params: void
@@ -47,6 +48,7 @@ int main (void) {
   /* Perform all device initialization here */
   /* Before unmasking interrupts            */
   InitPIT();
+	InitLEDGPIO();
 	InitUART0();
   __asm("CPSIE   I");  /* unmask interrupts */
 
@@ -56,8 +58,6 @@ int main (void) {
 	const char *Cols[] = {"Red\0", "Green\0", "Blue\0", "White\0"};
 	const int	 ColMasks[] = {PORTB_LED_RED_MASK, PORTB_LED_GREEN_MASK, 
 													PORTB_LED_BLUE_MASK, PORTB_LEDS_MASK};
-
-	// put globals here
 	
   for (;;) { /* do forever */
 		
@@ -78,8 +78,8 @@ char RandomLEDColor(void){
 }
 
 //***********************************************
-// Function that maps color commands to ints
-// Params: Character
+// Function that maps color commands to ints.
+// Params: char c
 // Returns: int
 //***********************************************
 int ColToInt(char c) {
@@ -108,5 +108,14 @@ void InitLEDGPIO(void){
 	PORTB->PCR[POS_GREEN] = PORT_PCR_SET_GPIO;
 	/* Select PORT B Pin 10 for GPIO to blue LED */
 	PORTB->PCR[POS_BLUE] = PORT_PCR_SET_GPIO;
+	/* Turn off red LED */
+	FPTB->PSOR = PORTB_LED_RED_MASK;
+	/* Turn off green LED */
+	FPTB->PSOR = PORTB_LED_GREEN_MASK;
+	/* Turn off blue LED */
+	FPTB->PSOR = PORTB_LED_BLUE_MASK;
+}
+
+void AddScore(int TimeElapsed, int RoundNumber){
 	
 }
