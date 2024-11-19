@@ -31,6 +31,7 @@ DEL         EQU  0x7F
 ESC         EQU  0x1B
 LF          EQU  0x0A
 NULL        EQU  0x00
+TO_UP_SUB	EQU	 'a'-'A'
 ;---------------------------------------------------------------
 ;DAC0
 DAC0_BITS   EQU   12
@@ -1005,7 +1006,26 @@ ClearCarry	; clear carry flag and end
 DivEnd		POP		{R2,R3,R4} ; pop R2-R4 from stack
 			BX		LR
 			
-		ENDP
+			ENDP
+
+ToUpperChar		PROC	{R0,R2-R14}
+;**********************************************************
+; If a character is contained in R1, then it is made
+; uppercase if it is not already
+;	Inputs:
+;		R1, The character to make uppercase
+;	Outputs:
+;		R1, The uppercasse character
+;**********************************************************
+					CMP		R1,#'a'
+					BLO		ToUpEnd				;not a lowercase character
+					CMP		R1,#'z'
+					BHI		ToUpEnd				;not a lowercase character
+					SUBS	R1,R1,#TO_UP_SUB	;make character uppercase
+
+ToUpEnd				BX		LR
+					ENDP
+
 
 ;>>>>>   end subroutine code <<<<<
             ALIGN

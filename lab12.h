@@ -36,3 +36,4 @@ void PutNumHex(UInt32);
 void PutNumUB(UInt8);
 void PutStringSB(char String[], int StringBufferCapacity);
 char Dequeue(int null, int RxQueueRecord, int QueueCapacity);
+char ToUpperChar(char c);

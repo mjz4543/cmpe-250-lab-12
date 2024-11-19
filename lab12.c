@@ -19,6 +19,7 @@
 /*********************************************************************/
 
 // put functions here
+int ColToInt(char c);
 
 //***********************************************
 // Main function.
@@ -34,6 +35,13 @@ int main (void) {
 	InitUART0();
   __asm("CPSIE   I");  /* unmask interrupts */
 
+	const char *inStr = "\n\r>";
+	const char *TimeOutStr = ":\tOut of time--color was \0";
+	const char *WrongStr = ":\tWrong\t";
+	const char *Cols[] = {"Red\0", "Green\0", "Blue\0", "White\0"};
+	const int	 ColMasks[] = {PORTB_LED_RED_MASK, PORTB_LED_GREEN_MASK, 
+													PORTB_LED_BLUE_MASK, PORTB_LEDS_MASK};
+	
 	// put globals here
 	
   for (;;) { /* do forever */
@@ -43,3 +51,25 @@ int main (void) {
 	} /* do forever */
 
 } /* main */
+
+//***********************************************
+// Function that maps color commands to ints
+// Params: Character
+// Returns: int
+//***********************************************
+int ColToInt(char c) {
+	c = ToUpperChar(c);
+	switch(c)
+	{
+		case 'R':
+			return 0;
+		case 'G':
+			return 1;
+		case 'B':
+			return 2;
+		case 'W':
+			return 3;
+		default:
+			return -1;
+	}
+}
