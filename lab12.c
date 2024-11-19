@@ -58,11 +58,25 @@ int main (void) {
 	const char *Cols[] = {"Red\0", "Green\0", "Blue\0", "White\0"};
 	const int	 ColMasks[] = {PORTB_LED_RED_MASK, PORTB_LED_GREEN_MASK, 
 													PORTB_LED_BLUE_MASK, PORTB_LEDS_MASK};
+	const int Rounds = 10;
+	const int RoundTime = 11; // (seconds)
+	// put globals here
+													
 	
   for (;;) { /* do forever */
 		
-		// TODO: kill god
-		
+		int Round = 1;
+	
+		//game loop
+		for(Round = 1; Round <= Rounds; Round++)
+		{
+			if((Count * 100) >= RoundTime - Round)
+			{
+				
+			} else {
+				Count = 0;
+			}
+		}
 	} /* do forever */
 
 } /* main */
@@ -78,6 +92,8 @@ char RandomLEDColor(void){
 }
 
 //***********************************************
+// Function that maps color commands to ints.
+// Params: char c
 // Function that maps color commands to ints.
 // Params: char c
 // Returns: int
@@ -128,5 +144,3 @@ void InitLEDs(void){
 void AddScore(int TimeElapsed, int RoundNumber){
 	Score += RoundNumber * (((11 - RoundNumber) * 100) - TimeElapsed);
 }
-
-
