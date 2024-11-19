@@ -35,7 +35,7 @@
 // put globals here
 
 int RandomNumber;
-int Score;
+int Score = 0;
 
 //***********************************************
 // Main function.
@@ -48,7 +48,7 @@ int main (void) {
   /* Perform all device initialization here */
   /* Before unmasking interrupts            */
   InitPIT();
-	InitLEDGPIO();
+	InitLEDs();
 	InitUART0();
   __asm("CPSIE   I");  /* unmask interrupts */
 
@@ -74,7 +74,7 @@ char RandomLEDColor(void){
 	RandomNumber -= (RandomNumber << 3);
 	RandomNumber ^= (RandomNumber << 10);
 	RandomNumber ^= (RandomNumber >> 15);
-	return RandomNumber |= 4;
+	return RandomNumber %= 4;
 }
 
 //***********************************************
@@ -98,8 +98,12 @@ int ColToInt(char c) {
 			return -1;
 	}
 }
-
-void InitLEDGPIO(void){
+//***********************************************
+// Initializes the LEDs.
+// Params: void
+// Returns: void
+//***********************************************
+void InitLEDs(void){
 	/* Enable clock for PORT B module */
 	SIM->SCGC5 |= SIM_SCGC5_PORTB_MASK;
 	/* Select PORT B Pin 8 for GPIO to red LED */
@@ -116,6 +120,13 @@ void InitLEDGPIO(void){
 	FPTB->PSOR = PORTB_LED_BLUE_MASK;
 }
 
+//***********************************************
+// Adds a number to the player's score.
+// Params: int TimeElapsed, int RoundNumber
+// Returns: void
+//***********************************************
 void AddScore(int TimeElapsed, int RoundNumber){
-	
+	Score += RoundNumber * (((11 - RoundNumber) * 100) - TimeElapsed);
 }
+
+
