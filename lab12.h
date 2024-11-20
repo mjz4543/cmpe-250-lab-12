@@ -22,8 +22,8 @@ typedef unsigned short int UInt16;
 typedef unsigned char UInt8;
 
 /* assembly variables */
-extern UInt32 Count;
-extern UInt8 RunTimer;
+volatile extern UInt32* Count;
+extern UInt8* RunTimer;
 extern UInt32 RxQueueRecord;
 
 /* assembly language subroutines */
@@ -39,5 +39,5 @@ void PutStringSB(char String[], int StringBufferCapacity);
 char Dequeue(int null, int RxQueueRecord, int QueueCapacity);
 char ToUpperChar(char c);
 int ColToInt(char c);
-void IsKeyPressed(void);
+char IsKeyPressed(void);
 void AddScore(int RoundNumber, int TimeElapsed);

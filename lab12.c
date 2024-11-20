@@ -45,37 +45,42 @@ int Score = 0;
 int main (void) {
 
   __asm("CPSID   I");  /* mask interrupts */
-  /* Perform all device initialization here */
-  /* Before unmasking interrupts            */
+  /* Perform all device initialization here before unmasking interrupts */
   InitPIT();
 	InitLEDs();
 	InitUART0();
   __asm("CPSIE   I");  /* unmask interrupts */
 
-	const char *inStr = "\n\r>";
-	const char *TimeOutStr = ":\tOut of time--color was \0";
-	const char *WrongStr = ":\tWrong\t";
-	const char *Cols[] = {"Red\0", "Green\0", "Blue\0", "White\0"};
-	const int	 ColMasks[] = {PORTB_LED_RED_MASK, PORTB_LED_GREEN_MASK, 
+	char *inStr = "\n\r>";
+	char *TimeOutStr = ":\tOut of time--color was \0";
+	char *WrongStr = ":\tWrong\t";
+	char *Cols[] = {"Red\0", "Green\0", "Blue\0", "White\0"};
+	int	 ColMasks[] = {PORTB_LED_RED_MASK, PORTB_LED_GREEN_MASK, 
 													PORTB_LED_BLUE_MASK, PORTB_LEDS_MASK};
 	const int Rounds = 10;
 	const int RoundTime = 11; // (seconds)
 	// put globals here
-													
+									
+	PutStringSB(WrongStr, MAX_STRING);
+	*Count = 0;
 	
   for (;;) { /* do forever */
-		
-		int Round = 1;
 	
 		//game loop
-		for(Round = 1; Round <= Rounds; Round++)
+		for(int Round = 1; Round <= Rounds; Round++)
 		{
-			if((Count * 100) >= RoundTime - Round)
+			*RunTimer = 0xFF;
+			PutStringSB(WrongStr, MAX_STRING);
+			while(*Count < ((RoundTime - Round) * 100))
 			{
+				char keypressed = IsKeyPressed();
+				if(!keypressed){ continue; } // if no key is pressed, loop again
+				char guess = Dequeue(0, RxQueueRecord, 79);
 				
-			} else {
-				Count = 0;
-			}
+			} // if we reach this point, we're out of time
+			*RunTimer = (UInt8)0xFF;
+			*Count = (UInt32)0;
+			PutStringSB(TimeOutStr, MAX_STRING);
 		}
 	} /* do forever */
 
