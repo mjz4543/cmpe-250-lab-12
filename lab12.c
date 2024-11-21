@@ -95,11 +95,11 @@ int main (void) {
 			FPTB->PCOR = ColMasks[RandomNumber];
 			SetCount(0);
 			StartTimer();
-			
+			waitloop:			
 			while(GetCount() < ((RoundTime - Round) * 100))
 			{
 				char keypressed = IsKeyPressed();
-				if(!keypressed){ continue; } // if no key is pressed, loop again
+				if(!keypressed){ goto waitloop; } // if no key is pressed, loop again
 				
 				int guess = ColToInt(Dequeue(0, GetRxQueueRecord(), 79));
 				if(guess == RandomNumber)
@@ -109,11 +109,11 @@ int main (void) {
 						PutStringSB(Cols[guess], MAX_STRING);
 						AddScore(GetCount(), Round);
 						break;
-				}else
+				} else
 				{
 					PutStringSB(WrongStr, MAX_STRING);
 					PutStringSB(InStr, MAX_STRING);
-					continue;
+					goto waitloop;
 				}
 				
 			} // if we reach this point, we're out of time

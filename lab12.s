@@ -1090,7 +1090,7 @@ StartTimer		PROC	{R1-R14}
 ;**********************************************************
 				PUSH	{R0-R1}
 				LDR		R1,=RunTimer
-				MOVS	R0,#0
+				MOVS	R0,#0xFF
 				STRB	R0,[R1,#0]
 				POP		{R0-R1}
 				BX		LR
@@ -1104,7 +1104,7 @@ StopTimer		PROC	{R1-R14}
 ;**********************************************************
 				PUSH	{R0-R1}
 				LDR		R1,=RunTimer
-				MOVS	R0,#0xFF
+				MOVS	R0,#0x00
 				STRB	R0,[R1,#0]
 				POP		{R0-R1}
 				BX		LR

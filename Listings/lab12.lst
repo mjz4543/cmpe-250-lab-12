@@ -1648,7 +1648,7 @@ ARM Macro Assembler    Page 26 Program Title for Listing Header Goes Here
                        ***
  1091 00000302 B403            PUSH             {R0-R1}
  1092 00000304 4909            LDR              R1,=RunTimer
- 1093 00000306 2000            MOVS             R0,#0
+ 1093 00000306 20FF            MOVS             R0,#0xFF
  1094 00000308 7008            STRB             R0,[R1,#0]
  1095 0000030A BC03            POP              {R0-R1}
  1096 0000030C 4770            BX               LR
@@ -1666,7 +1666,7 @@ ARM Macro Assembler    Page 26 Program Title for Listing Header Goes Here
                        ***
  1105 0000030E B403            PUSH             {R0-R1}
  1106 00000310 4906            LDR              R1,=RunTimer
- 1107 00000312 20FF            MOVS             R0,#0xFF
+ 1107 00000312 2000            MOVS             R0,#0x00
  1108 00000314 7008            STRB             R0,[R1,#0]
  1109 00000316 BC03            POP              {R0-R1}
  1110 00000318 4770            BX               LR
