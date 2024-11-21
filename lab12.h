@@ -27,21 +27,21 @@ extern UInt8 *RunTimer;
 extern UInt32 *RxQueueRecord;
 
 /* assembly language subroutines */
-char GetChar(void);
+Int8 GetChar(void);
 void GetStringSB(char String[], int StringBufferCapacity);
 void InitUART0(void);
 void InitPIT(void);
-
 void PutChar(char Character);
 void PutNumHex(UInt32);
 void PutNumUB(UInt8);
 void PutStringSB(char String[], int StringBufferCapacity);
-char Dequeue(int null, UInt32* RxQueueRecord, int QueueCapacity);
-char ToUpperChar(char c);
+Int8 Dequeue(int null, UInt32 RxQueueRecord, int QueueCapacity);
+Int8 ToUpperChar(char c);
 int ColToInt(char c);
-char IsKeyPressed(void);
+Int8 IsKeyPressed(void);
 void AddScore(int RoundNumber, int TimeElapsed);
 int GetCount(void);
 void SetCount(UInt32 value);
 void StartTimer(void);
 void StopTimer(void);
+int GetRxQueueRecord(void);

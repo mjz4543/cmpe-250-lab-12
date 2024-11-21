@@ -61,7 +61,6 @@ int main (void) {
 	char WrongStr[10] = ":\tWrong\t\0";
 	char InStr[4] = "\n\r>\0";
 	char TimeOutStr[28] = ":\tOut of time--color was \0";
-	//char WrongStr[10] = ":\tWrong\t\0";
 	char Cols[4][6] = {"Red\0", "Green\0", "Blue\0", "White\0"};
 	char PlayStr[] = "\n\rPlay LED Game Guessing Game (Press Any Key): \0";
 	char GStr[] = "\n\rGuess (R,G,B,W)\0";
@@ -72,13 +71,10 @@ int main (void) {
 	const int Rounds = 10;
 	const int RoundTime = 11; // (seconds)
 	// put globals here
-									
-	SetCount(0);
 	
   for (;;) { /* do forever */
 	
 		//game loop start
-		*Count = (UInt32)0;
 		Score = 0;
 		FPTB->PSOR = ColMasks[3];
 		
@@ -97,6 +93,7 @@ int main (void) {
 			
 			//Turn On Random LED and start timer
 			FPTB->PCOR = ColMasks[RandomNumber];
+			SetCount(0);
 			StartTimer();
 			
 			while(GetCount() < ((RoundTime - Round) * 100))
@@ -104,7 +101,7 @@ int main (void) {
 				char keypressed = IsKeyPressed();
 				if(!keypressed){ continue; } // if no key is pressed, loop again
 				
-				int guess = ColToInt(Dequeue(0, RxQueueRecord, 79));
+				int guess = ColToInt(Dequeue(0, GetRxQueueRecord(), 79));
 				if(guess == RandomNumber)
 				{
 						StopTimer();

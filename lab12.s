@@ -317,6 +317,7 @@ UART0_S2_NO_RXINV_BRK10_NO_LBKDETECT_CLEAR_FLAGS  EQU  \
 		EXPORT	SetCount
 		EXPORT	StartTimer
 		EXPORT	StopTimer
+		EXPORT	GetRxQueueRecord
 ;>>>>> begin subroutine code <<<<<
 
 ; UART0_IRQHandler
@@ -1106,6 +1107,16 @@ StopTimer		PROC	{R1-R14}
 				MOVS	R0,#0xFF
 				STRB	R0,[R1,#0]
 				POP		{R0-R1}
+				BX		LR
+				ENDP
+					
+;-------------------------------------------------------------------------------
+
+GetRxQueueRecord		PROC	{R1-R14}
+;**********************************************************
+; Sets the address of the RxQueueRecord variable.
+;**********************************************************
+				LDR		R0,=RxQueueRecord
 				BX		LR
 				ENDP
 
