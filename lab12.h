@@ -22,9 +22,9 @@ typedef unsigned short int UInt16;
 typedef unsigned char UInt8;
 
 /* assembly variables */
-volatile extern UInt32* Count;
-extern UInt8* RunTimer;
-extern UInt32 RxQueueRecord;
+volatile extern UInt32 *Count;
+extern UInt8 *RunTimer;
+extern UInt32 *RxQueueRecord;
 
 /* assembly language subroutines */
 char GetChar(void);
@@ -36,7 +36,7 @@ void PutChar(char Character);
 void PutNumHex(UInt32);
 void PutNumUB(UInt8);
 void PutStringSB(char String[], int StringBufferCapacity);
-char Dequeue(int null, int RxQueueRecord, int QueueCapacity);
+char Dequeue(int null, UInt32 *RxQueueRecord, int QueueCapacity);
 char ToUpperChar(char c);
 int ColToInt(char c);
 char IsKeyPressed(void);
