@@ -315,8 +315,8 @@ UART0_S2_NO_RXINV_BRK10_NO_LBKDETECT_CLEAR_FLAGS  EQU  \
 		EXPORT	ToUpperChar
 ;>>>>> begin subroutine code <<<<<
 
-UART0_IRQHandler
-UART0_ISR		PROC	{R0-R14}
+; UART0_IRQHandler
+UART0_IRQHandler	PROC	{R0-R14}
 ;------------------------------------------------;
 ; Interrupt service routine for UART0. Disables  ;
 ; TDRE interrupts if the transmit queue is       ;
@@ -372,8 +372,8 @@ EndUART0_ISR
 
 ;-------------------------------------------------------------------------------
 
-PIT_IRQHandler ; TODO: is this the right label name?
-PIT_ISR		PROC	{R1-R14}
+; PIT_IRQHandler
+PIT_IRQHandler		PROC	{R1-R14}
 ;------------------------------------------------;
 ; IRQ handler for the PIT. If RunTimer is set,   ;
 ; the counter increments, otherwise it does not. ;
@@ -381,6 +381,7 @@ PIT_ISR		PROC	{R1-R14}
 ;------------------------------------------------;
 
 		CPSID	I
+		PUSH	{LR}
 		
 		LDR		R0,=RunTimer
 		LDRB	R0,[R0,#0]
@@ -399,7 +400,7 @@ PIT_ISR_ClrInt
 		STR 	R1,[R0,#PIT_TFLG_OFFSET]
 		
 		CPSIE	I
-		BX		LR
+		POP		{PC}
 		
 		ENDP
 
