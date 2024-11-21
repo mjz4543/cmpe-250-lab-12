@@ -35,7 +35,13 @@
 // put globals here
 
 int RandomNumber;
-int Score = 0;
+UInt8 Score = 0;
+
+//Declare Functions
+int RandomLEDColor(void);
+int ColToInt(char c);
+void AddScore(int TimeElapsed, int RoundNumber);
+
 
 //***********************************************
 // Main function.
@@ -51,41 +57,87 @@ int main (void) {
 	InitUART0();
   __asm("CPSIE   I");  /* unmask interrupts */
 
-	char *inStr = "\n\r>";
-	char *TimeOutStr = ":\tOut of time--color was \0";
-	char *WrongStr = ":\tWrong\t";
+	char InStr[] = "\n\r>";
+	char TimeOutStr[] = ":\tOut of time--color was \0";
+	char WrongStr[] = ":\tWrong\t";
+	char ScStr[] = "\n\rFinal Score: ";
+	char RStr[] = "\tCorrect--color was \0";
 	char *Cols[] = {"Red\0", "Green\0", "Blue\0", "White\0"};
-	int	 ColMasks[] = {PORTB_LED_RED_MASK, PORTB_LED_GREEN_MASK, 
+	char PlayStr[] = "\n\rPlay LED Game Guessing Game (Press Any Key): \0";
+	char GStr[] = "\n\rGuess (R,G,B,W)\0";
+	int	ColMasks[] = {PORTB_LED_RED_MASK, PORTB_LED_GREEN_MASK, 
 													PORTB_LED_BLUE_MASK, PORTB_LEDS_MASK};
 	const int Rounds = 10;
 	const int RoundTime = 11; // (seconds)
 	// put globals here
-									
-	PutStringSB(WrongStr, MAX_STRING);
+			
+													
 	*Count = 0;
 	
   for (;;) { /* do forever */
 	
-		//game loop
+		//game loop start
+		Score = 0;
+		FPTB->PSOR = ColMasks[3];
+		
+		PutStringSB(PlayStr, MAX_STRING);
+		while(!IsKeyPressed()) {}
+			
+		PutStringSB(GStr, MAX_STRING);
 		for(int Round = 1; Round <= Rounds; Round++)
 		{
+			//print input stuff
+			PutStringSB(InStr, MAX_STRING);
+			
+			//Turn Off LEDs and get ramdom number
+			FPTB->PSOR = ColMasks[3];
+			RandomNumber = RandomLEDColor();
+			
+			//Turn On Random LED and start timer
+			FPTB->PCOR = ColMasks[RandomNumber];
 			*RunTimer = 0xFF;
-			PutStringSB(WrongStr, MAX_STRING);
+			
 			while(*Count < ((RoundTime - Round) * 100))
 			{
 				char keypressed = IsKeyPressed();
 				if(!keypressed){ continue; } // if no key is pressed, loop again
-				char guess = Dequeue(0, RxQueueRecord, 79);
+				
+				int guess = ColToInt(Dequeue(0, RxQueueRecord, 79));
+				if(guess == RandomNumber)
+				{
+						PutStringSB(RStr, MAX_STRING);
+						PutStringSB(Cols[guess], MAX_STRING);
+						AddScore(*Count, Round);
+						break;
+				}else
+				{
+					PutStringSB(WrongStr, MAX_STRING);
+					PutStringSB(InStr, MAX_STRING);
+					continue;
+				}
 				
 			} // if we reach this point, we're out of time
 			*RunTimer = (UInt8)0xFF;
 			*Count = (UInt32)0;
 			PutStringSB(TimeOutStr, MAX_STRING);
+			PutStringSB(Cols[RandomNumber], MAX_STRING);
 		}
+		//end of game, print final score
+		PutStringSB(ScStr, MAX_STRING);
+		PutNumUB(Score);
+		
 	} /* do forever */
 
 } /* main */
-char RandomLEDColor(void){
+
+//Implament Functions
+
+//***********************************************
+// Function that gets a random number
+// Params: none
+// Returns: int
+//***********************************************
+int RandomLEDColor(void){
 	RandomNumber -= (RandomNumber << 6);
 	RandomNumber ^= (RandomNumber >> 17);
 	RandomNumber -= (RandomNumber << 9);
@@ -97,8 +149,6 @@ char RandomLEDColor(void){
 }
 
 //***********************************************
-// Function that maps color commands to ints.
-// Params: char c
 // Function that maps color commands to ints.
 // Params: char c
 // Returns: int
