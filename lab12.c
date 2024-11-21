@@ -80,6 +80,7 @@ int main (void) {
 		
 		PutStringSB(PlayStr, MAX_STRING);
 		while(!IsKeyPressed()) {}
+		Dequeue('\0', GetRxQueueRecord(), 79);
 			
 		PutStringSB(GStr, MAX_STRING);
 		for(int Round = 1; Round <= Rounds; Round++)
@@ -108,7 +109,7 @@ int main (void) {
 						PutStringSB(RStr, MAX_STRING);
 						PutStringSB(Cols[guess], MAX_STRING);
 						AddScore(GetCount(), Round);
-						break;
+						goto roundend;
 				} else
 				{
 					PutStringSB(WrongStr, MAX_STRING);
@@ -118,14 +119,14 @@ int main (void) {
 				
 			} 
 			
-			StopTimer();
-			if(GetCount() > 0)
-			{
 				// if we reach this point, we're out of time
-				SetCount(0);
-				PutStringSB(TimeOutStr, MAX_STRING);
-				PutStringSB(Cols[RandomNumber], MAX_STRING);
-			}
+
+			StopTimer();			
+			SetCount(0);
+			PutStringSB(TimeOutStr, MAX_STRING);
+			PutStringSB(Cols[RandomNumber], MAX_STRING);
+			roundend:
+			__ASM("NOP");
 		}
 		//end of game, print final score
 		PutStringSB(ScStr, MAX_STRING);
