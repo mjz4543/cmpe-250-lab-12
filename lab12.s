@@ -1079,6 +1079,7 @@ RxQueueRecord		SPACE 	18
 RxQueueBuffer		SPACE	80
 
 RunTimer			SPACE	1
+	ALIGN
 Count				SPACE	4
 
 ;>>>>>   end variables here <<<<<

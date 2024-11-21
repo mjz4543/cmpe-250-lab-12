@@ -41,6 +41,7 @@ UInt8 Score = 0;
 int RandomLEDColor(void);
 int ColToInt(char c);
 void AddScore(int TimeElapsed, int RoundNumber);
+void InitLEDs(void);
 
 
 //***********************************************
@@ -52,14 +53,12 @@ int main (void) {
 
   __asm("CPSID   I");  /* mask interrupts */
   /* Perform all device initialization here before unmasking interrupts */
-	//InitLEDs();
+	InitLEDs();
 	InitUART0();
-	//InitPIT();
+	InitPIT();
   __asm("CPSIE   I");  /* unmask interrupts */
 
 	char WrongStr[10] = ":\tWrong\t\0";
-	PutStringSB(WrongStr, MAX_STRING);
-	
 	char InStr[4] = "\n\r>\0";
 	char TimeOutStr[28] = ":\tOut of time--color was \0";
 	//char WrongStr[10] = ":\tWrong\t\0";
@@ -72,13 +71,12 @@ int main (void) {
 													PORTB_LED_BLUE_MASK, PORTB_LEDS_MASK};
 	const int Rounds = 10;
 	const int RoundTime = 11; // (seconds)
-	// put globals here
-									
-	*Count = 0;
-	
+	// put globals here					
+													
   for (;;) { /* do forever */
 	
 		//game loop start
+		*Count = (UInt32)0;
 		Score = 0;
 		FPTB->PSOR = ColMasks[3];
 		
@@ -97,7 +95,7 @@ int main (void) {
 			
 			//Turn On Random LED and start timer
 			FPTB->PCOR = ColMasks[RandomNumber];
-			*RunTimer = 0xFF;
+			*RunTimer = (UInt8)0xFF;
 			
 			while(*Count < ((RoundTime - Round) * 100))
 			{
@@ -185,6 +183,9 @@ void InitLEDs(void){
 	PORTB->PCR[POS_GREEN] = PORT_PCR_SET_GPIO;
 	/* Select PORT B Pin 10 for GPIO to blue LED */
 	PORTB->PCR[POS_BLUE] = PORT_PCR_SET_GPIO;
+	/*Set Direction*/
+	FPTB->PDDR = PORTB_LEDS_MASK;
+	/*set stregnt*/
 	/* Turn off red LED */
 	FPTB->PSOR = PORTB_LED_RED_MASK;
 	/* Turn off green LED */
