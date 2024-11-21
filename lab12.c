@@ -74,7 +74,7 @@ int main (void) {
 	const int RoundTime = 11; // (seconds)
 	// put globals here
 									
-	*Count = 0;
+	SetCount(0);
 	
   for (;;) { /* do forever */
 	
@@ -97,9 +97,9 @@ int main (void) {
 			
 			//Turn On Random LED and start timer
 			FPTB->PCOR = ColMasks[RandomNumber];
-			*RunTimer = 0xFF;
+			StartTimer();
 			
-			while(*Count < ((RoundTime - Round) * 100))
+			while(GetCount() < ((RoundTime - Round) * 100))
 			{
 				char keypressed = IsKeyPressed();
 				if(!keypressed){ continue; } // if no key is pressed, loop again
@@ -107,9 +107,10 @@ int main (void) {
 				int guess = ColToInt(Dequeue(0, RxQueueRecord, 79));
 				if(guess == RandomNumber)
 				{
+						StopTimer();
 						PutStringSB(RStr, MAX_STRING);
 						PutStringSB(Cols[guess], MAX_STRING);
-						AddScore(*Count, Round);
+						AddScore(GetCount(), Round);
 						break;
 				}else
 				{
@@ -119,8 +120,8 @@ int main (void) {
 				}
 				
 			} // if we reach this point, we're out of time
-			*RunTimer = (UInt8)0xFF;
-			*Count = (UInt32)0;
+			StopTimer();
+			SetCount(0);
 			PutStringSB(TimeOutStr, MAX_STRING);
 			PutStringSB(Cols[RandomNumber], MAX_STRING);
 		}
@@ -132,7 +133,7 @@ int main (void) {
 
 } /* main */
 
-//Implament Functions
+//Implement Functions
 
 //***********************************************
 // Function that gets a random number

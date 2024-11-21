@@ -313,6 +313,10 @@ UART0_S2_NO_RXINV_BRK10_NO_LBKDETECT_CLEAR_FLAGS  EQU  \
 		EXPORT	Dequeue
 		EXPORT	IsKeyPressed
 		EXPORT	ToUpperChar
+		EXPORT	GetCount
+		EXPORT	SetCount
+		EXPORT	StartTimer
+		EXPORT	StopTimer
 ;>>>>> begin subroutine code <<<<<
 
 ; UART0_IRQHandler
@@ -1033,6 +1037,8 @@ DivEnd		POP		{R2,R3,R4} ; pop R2-R4 from stack
 			
 			ENDP
 
+;-------------------------------------------------------------------------------
+
 ToUpperChar		PROC	{R0,R2-R14}
 ;**********************************************************
 ; If a character is contained in R1, then it is made
@@ -1042,15 +1048,66 @@ ToUpperChar		PROC	{R0,R2-R14}
 ;	Outputs:
 ;		R1, The uppercasse character
 ;**********************************************************
-					CMP		R1,#'a'
-					BLO		ToUpEnd				;not a lowercase character
-					CMP		R1,#'z'
-					BHI		ToUpEnd				;not a lowercase character
-					SUBS	R1,R1,#TO_UP_SUB	;make character uppercase
+				CMP		R1,#'a'
+				BLO		ToUpEnd				;not a lowercase character
+				CMP		R1,#'z'
+				BHI		ToUpEnd				;not a lowercase character
+				SUBS	R1,R1,#TO_UP_SUB	;make character uppercase
 
-ToUpEnd				BX		LR
-					ENDP
+ToUpEnd			BX		LR
+				ENDP
+						
+;-------------------------------------------------------------------------------
 
+GetCount		PROC	{R1-R14}
+;**********************************************************
+; Gets the Count variable.
+;**********************************************************
+				LDR		R0,=Count
+				LDR		R0,[R0,#0]
+				BX		LR
+				ENDP
+
+;-------------------------------------------------------------------------------
+
+SetCount		PROC	{R1-R14}
+;**********************************************************
+; Sets the Count variable to the value in R0.
+;**********************************************************
+				PUSH	{R1}
+				LDR		R1,=Count
+				STR		R0,[R1,#0]
+				POP		{R1}
+				BX		LR
+				ENDP
+
+;-------------------------------------------------------------------------------
+
+StartTimer		PROC	{R1-R14}
+;**********************************************************
+; Sets the RunTimer variable to 0xFF.
+;**********************************************************
+				PUSH	{R0-R1}
+				LDR		R1,=RunTimer
+				MOVS	R0,#0
+				STRB	R0,[R1,#0]
+				POP		{R0-R1}
+				BX		LR
+				ENDP
+
+;-------------------------------------------------------------------------------
+
+StopTimer		PROC	{R1-R14}
+;**********************************************************
+; Sets the RunTimer variable to 0x0.
+;**********************************************************
+				PUSH	{R0-R1}
+				LDR		R1,=RunTimer
+				MOVS	R0,#0xFF
+				STRB	R0,[R1,#0]
+				POP		{R0-R1}
+				BX		LR
+				ENDP
 
 ;>>>>>   end subroutine code <<<<<
             ALIGN
@@ -1079,6 +1136,7 @@ RxQueueRecord		SPACE 	18
 RxQueueBuffer		SPACE	80
 
 RunTimer			SPACE	1
+	ALIGN
 Count				SPACE	4
 
 ;>>>>>   end variables here <<<<<
