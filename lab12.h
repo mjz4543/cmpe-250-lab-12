@@ -22,7 +22,7 @@ typedef unsigned short int UInt16;
 typedef unsigned char UInt8;
 
 /* assembly variables */
-volatile extern UInt32 *Count;
+extern UInt32 *Count;
 extern UInt8 *RunTimer;
 extern UInt32 *RxQueueRecord;
 
@@ -31,7 +31,7 @@ char GetChar(void);
 void GetStringSB(char String[], int StringBufferCapacity);
 void InitUART0(void);
 void InitPIT(void);
-void InitLEDs(void);
+
 void PutChar(char Character);
 void PutNumHex(UInt32);
 void PutNumUB(UInt8);
