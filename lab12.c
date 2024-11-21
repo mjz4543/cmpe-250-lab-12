@@ -52,26 +52,28 @@ int main (void) {
 
   __asm("CPSID   I");  /* mask interrupts */
   /* Perform all device initialization here before unmasking interrupts */
-  InitPIT();
-	InitLEDs();
+	//InitLEDs();
 	InitUART0();
+	//InitPIT();
   __asm("CPSIE   I");  /* unmask interrupts */
 
-	char InStr[] = "\n\r>";
-	char TimeOutStr[] = ":\tOut of time--color was \0";
-	char WrongStr[] = ":\tWrong\t";
-	char ScStr[] = "\n\rFinal Score: ";
-	char RStr[] = "\tCorrect--color was \0";
-	char *Cols[] = {"Red\0", "Green\0", "Blue\0", "White\0"};
+	char WrongStr[10] = ":\tWrong\t\0";
+	PutStringSB(WrongStr, MAX_STRING);
+	
+	char InStr[4] = "\n\r>\0";
+	char TimeOutStr[28] = ":\tOut of time--color was \0";
+	//char WrongStr[10] = ":\tWrong\t\0";
+	char Cols[4][6] = {"Red\0", "Green\0", "Blue\0", "White\0"};
 	char PlayStr[] = "\n\rPlay LED Game Guessing Game (Press Any Key): \0";
 	char GStr[] = "\n\rGuess (R,G,B,W)\0";
-	int	ColMasks[] = {PORTB_LED_RED_MASK, PORTB_LED_GREEN_MASK, 
+	char ScStr[] = "\n\rFinal Score: ";
+	char RStr[] = "\tCorrect--color was \0";
+	int	 ColMasks[] = {PORTB_LED_RED_MASK, PORTB_LED_GREEN_MASK, 
 													PORTB_LED_BLUE_MASK, PORTB_LEDS_MASK};
 	const int Rounds = 10;
 	const int RoundTime = 11; // (seconds)
 	// put globals here
-			
-													
+									
 	*Count = 0;
 	
   for (;;) { /* do forever */
