@@ -1049,11 +1049,11 @@ ToUpperChar		PROC	{R0,R2-R14}
 ;	Outputs:
 ;		R1, The uppercasse character
 ;**********************************************************
-				CMP		R1,#'a'
+				CMP		R0,#'a'
 				BLO		ToUpEnd				;not a lowercase character
-				CMP		R1,#'z'
+				CMP		R0,#'z'
 				BHI		ToUpEnd				;not a lowercase character
-				SUBS	R1,R1,#TO_UP_SUB	;make character uppercase
+				SUBS	R0,R0,#TO_UP_SUB	;make character uppercase
 
 ToUpEnd			BX		LR
 				ENDP
