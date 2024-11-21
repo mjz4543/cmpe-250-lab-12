@@ -113,14 +113,18 @@ int main (void) {
 				{
 					PutStringSB(WrongStr, MAX_STRING);
 					PutStringSB(InStr, MAX_STRING);
-					continue;
 				}
 				
-			} // if we reach this point, we're out of time
+			} 
+			
 			StopTimer();
-			SetCount(0);
-			PutStringSB(TimeOutStr, MAX_STRING);
-			PutStringSB(Cols[RandomNumber], MAX_STRING);
+			if(GetCount() > 0)
+			{
+				// if we reach this point, we're out of time
+				SetCount(0);
+				PutStringSB(TimeOutStr, MAX_STRING);
+				PutStringSB(Cols[RandomNumber], MAX_STRING);
+			}
 		}
 		//end of game, print final score
 		PutStringSB(ScStr, MAX_STRING);
