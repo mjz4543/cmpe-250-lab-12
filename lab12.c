@@ -33,8 +33,7 @@
 /*********************************************************************/
 
 // put globals here
-
-int RandomNumber;
+int RandomSeed;
 UInt8 Score = 0;
 
 //Declare Functions
@@ -70,19 +69,22 @@ int main (void) {
 													PORTB_LED_BLUE_MASK, PORTB_LEDS_MASK};
 	const int Rounds = 10;
 	const int RoundTime = 11; // (seconds)
-	// put globals here
 	
   for (;;) { /* do forever */
 	
 		//game loop start
 		Score = 0;
 		FPTB->PSOR = ColMasks[3];
-		
 		PutStringSB(PlayStr, MAX_STRING);
-		while(!IsKeyPressed()) {}
+		
+		StartTimer();
+		while(!IsKeyPressed())
+		RandomSeed = GetCount();
+		StopTimer();
+		
 		Dequeue('\0', GetRxQueueRecord(), 79);
-			
 		PutStringSB(GStr, MAX_STRING);
+
 		for(int Round = 1; Round <= Rounds; Round++)
 		{
 			//print input stuff
@@ -90,10 +92,10 @@ int main (void) {
 			
 			//Turn Off LEDs and get ramdom number
 			FPTB->PSOR = ColMasks[3];
-			RandomNumber = RandomLEDColor();
+			RandomSeed = RandomLEDColor();
 			
 			//Turn On Random LED and start timer
-			FPTB->PCOR = ColMasks[RandomNumber];
+			FPTB->PCOR = ColMasks[RandomSeed];
 			SetCount(0);
 			StartTimer();
 			waitloop:			
@@ -103,8 +105,9 @@ int main (void) {
 				if(!keypressed){ goto waitloop; } // if no key is pressed, loop again
 				
 				int guess = ColToInt(Dequeue(0, GetRxQueueRecord(), 79));
-				if(guess == RandomNumber)
+				if(guess == RandomSeed)
 				{
+						RandomSeed = GetCount();
 						StopTimer();
 						PutStringSB(RStr, MAX_STRING);
 						PutStringSB(Cols[guess], MAX_STRING);
@@ -116,15 +119,14 @@ int main (void) {
 					PutStringSB(InStr, MAX_STRING);
 					goto waitloop;
 				}
-				
 			} 
 			
-				// if we reach this point, we're out of time
+			// if we reach this point, we're out of time
 
 			StopTimer();			
 			SetCount(0);
 			PutStringSB(TimeOutStr, MAX_STRING);
-			PutStringSB(Cols[RandomNumber], MAX_STRING);
+			PutStringSB(Cols[RandomSeed], MAX_STRING);
 			roundend:
 			__ASM("NOP");
 		}
@@ -136,22 +138,21 @@ int main (void) {
 
 } /* main */
 
-//Implement Functions
-
 //***********************************************
 // Function that gets a random number
 // Params: none
 // Returns: int
 //***********************************************
 int RandomLEDColor(void){
-	RandomNumber -= (RandomNumber << 6);
-	RandomNumber ^= (RandomNumber >> 17);
-	RandomNumber -= (RandomNumber << 9);
-	RandomNumber ^= (RandomNumber << 4);
-	RandomNumber -= (RandomNumber << 3);
-	RandomNumber ^= (RandomNumber << 10);
-	RandomNumber ^= (RandomNumber >> 15);
-	return RandomNumber %= 4;
+	if(RandomSeed == 0) RandomSeed = GetCount();
+	RandomSeed -= (RandomSeed << 6);
+	RandomSeed ^= (RandomSeed >> 17);
+	RandomSeed -= (RandomSeed << 9);
+	RandomSeed ^= (RandomSeed << 4);
+	RandomSeed -= (RandomSeed << 3);
+	RandomSeed ^= (RandomSeed << 10);
+	RandomSeed ^= (RandomSeed >> 15);
+	return RandomSeed %= 4;
 }
 
 //***********************************************

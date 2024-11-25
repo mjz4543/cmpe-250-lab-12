@@ -6,7 +6,8 @@ Section Cross References
 
     lab12.o(i.AddScore) refers to lab12.o(.data) for Score
     lab12.o(i.ColToInt) refers to lab12_1.o(MyCode) for ToUpperChar
-    lab12.o(i.RandomLEDColor) refers to lab12.o(.data) for RandomNumber
+    lab12.o(i.RandomLEDColor) refers to lab12_1.o(MyCode) for GetCount
+    lab12.o(i.RandomLEDColor) refers to lab12.o(.data) for RandomSeed
     lab12.o(i.main) refers to lab12.o(i.InitLEDs) for InitLEDs
     lab12.o(i.main) refers to lab12_1.o(MyCode) for InitUART0
     lab12.o(i.main) refers to rt_memcpy.o(.emb_text) for __aeabi_memcpy4
@@ -285,7 +286,7 @@ Image Symbol Table
     i.ColToInt                               0x00000258   Section        0  lab12.o(i.ColToInt)
     i.InitLEDs                               0x0000028c   Section        0  lab12.o(i.InitLEDs)
     i.RandomLEDColor                         0x000002cc   Section        0  lab12.o(i.RandomLEDColor)
-    i.SystemInit                             0x0000034c   Section        0  system_mkl05z4.o(i.SystemInit)
+    i.SystemInit                             0x0000035c   Section        0  system_mkl05z4.o(i.SystemInit)
     .ARM.__at_0x400                          0x00000400   Section       16  startup_mkl05z4.o(.ARM.__at_0x400)
     MyCode                                   0x00000410   Section      968  lab12_1.o(MyCode)
     InitQueue                                0x00000573   Thumb Code    22  lab12_1.o(MyCode)
@@ -293,7 +294,7 @@ Image Symbol Table
     PutNumU                                  0x0000068f   Thumb Code    38  lab12_1.o(MyCode)
     DIVU                                     0x000006b5   Thumb Code    66  lab12_1.o(MyCode)
     i.main                                   0x000007d8   Section        0  lab12.o(i.main)
-    .constdata                               0x00000a10   Section       68  lab12.o(.constdata)
+    .constdata                               0x00000a20   Section       68  lab12.o(.constdata)
     .data                                    0x1ffffc00   Section        5  lab12.o(.data)
     MyData                                   0x1ffffc08   Section      208  lab12_1.o(MyData)
     TxQueueRecord                            0x1ffffc08   Data          18  lab12_1.o(MyData)
@@ -446,10 +447,8 @@ Image Symbol Table
     AddScore                                 0x0000023d   Thumb Code    24  lab12.o(i.AddScore)
     ColToInt                                 0x00000259   Thumb Code    52  lab12.o(i.ColToInt)
     InitLEDs                                 0x0000028d   Thumb Code    48  lab12.o(i.InitLEDs)
-    RandomLEDColor                           0x000002cd   Thumb Code   122  lab12.o(i.RandomLEDColor)
-    SystemInit                               0x0000034d   Thumb Code   116  system_mkl05z4.o(i.SystemInit)
-    Region$$Table$$Base                      0x000003d8   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x000003f8   Number         0  anon$$obj.o(Region$$Table)
+    RandomLEDColor                           0x000002cd   Thumb Code   140  lab12.o(i.RandomLEDColor)
+    SystemInit                               0x0000035d   Thumb Code   116  system_mkl05z4.o(i.SystemInit)
     UART0_IRQHandler                         0x00000411   Thumb Code    58  lab12_1.o(MyCode)
     PIT_IRQHandler                           0x0000044b   Thumb Code    30  lab12_1.o(MyCode)
     InitUART0                                0x00000469   Thumb Code   148  lab12_1.o(MyCode)
@@ -468,8 +467,10 @@ Image Symbol Table
     StartTimer                               0x00000713   Thumb Code    12  lab12_1.o(MyCode)
     StopTimer                                0x0000071f   Thumb Code    12  lab12_1.o(MyCode)
     GetRxQueueRecord                         0x0000072b   Thumb Code     4  lab12_1.o(MyCode)
-    main                                     0x000007d9   Thumb Code   422  lab12.o(i.main)
-    RandomNumber                             0x1ffffc00   Data           4  lab12.o(.data)
+    main                                     0x000007d9   Thumb Code   440  lab12.o(i.main)
+    Region$$Table$$Base                      0x00000a64   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x00000a84   Number         0  anon$$obj.o(Region$$Table)
+    RandomSeed                               0x1ffffc00   Data           4  lab12.o(.data)
     Score                                    0x1ffffc04   Data           1  lab12.o(.data)
     RxQueueRecord                            0x1ffffc6c   Data          18  lab12_1.o(MyData)
     RunTimer                                 0x1ffffcd0   Data           1  lab12_1.o(MyData)
@@ -485,9 +486,9 @@ Memory Map of the image
 
   Image Entry point : 0x0000019d
 
-  Load Region LR_1 (Base: 0x00000000, Size: 0x00000b2c, Max: 0xffffffff, ABSOLUTE)
+  Load Region LR_1 (Base: 0x00000000, Size: 0x00000b5c, Max: 0xffffffff, ABSOLUTE)
 
-    Execution Region ER_RO (Exec base: 0x00000000, Load base: 0x00000000, Size: 0x00000a54, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RO (Exec base: 0x00000000, Load base: 0x00000000, Size: 0x00000a84, Max: 0xffffffff, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -552,26 +553,26 @@ Memory Map of the image
     0x0000023c   0x0000023c   0x0000001c   Code   RO            3    i.AddScore          lab12.o
     0x00000258   0x00000258   0x00000034   Code   RO            4    i.ColToInt          lab12.o
     0x0000028c   0x0000028c   0x00000040   Code   RO            5    i.InitLEDs          lab12.o
-    0x000002cc   0x000002cc   0x00000080   Code   RO            6    i.RandomLEDColor    lab12.o
-    0x0000034c   0x0000034c   0x0000008c   Code   RO           94    i.SystemInit        system_mkl05z4.o
-    0x000003d8   0x000003d8   0x00000020   Data   RO          304    Region$$Table       anon$$obj.o
-    0x000003f8   0x000003f8   0x00000008   PAD
+    0x000002cc   0x000002cc   0x00000090   Code   RO            6    i.RandomLEDColor    lab12.o
+    0x0000035c   0x0000035c   0x0000008c   Code   RO           94    i.SystemInit        system_mkl05z4.o
+    0x000003e8   0x000003e8   0x00000018   PAD
     0x00000400   0x00000400   0x00000010   Code   RO           84    .ARM.__at_0x400     startup_mkl05z4.o
     0x00000410   0x00000410   0x000003c8   Code   RO           75    MyCode              lab12_1.o
-    0x000007d8   0x000007d8   0x00000238   Code   RO            7    i.main              lab12.o
-    0x00000a10   0x00000a10   0x00000044   Data   RO            8    .constdata          lab12.o
+    0x000007d8   0x000007d8   0x00000248   Code   RO            7    i.main              lab12.o
+    0x00000a20   0x00000a20   0x00000044   Data   RO            8    .constdata          lab12.o
+    0x00000a64   0x00000a64   0x00000020   Data   RO          304    Region$$Table       anon$$obj.o
 
 
-    Execution Region ER_RW (Exec base: 0x1ffffc00, Load base: 0x00000a54, Size: 0x000000d8, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RW (Exec base: 0x1ffffc00, Load base: 0x00000a84, Size: 0x000000d8, Max: 0xffffffff, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x1ffffc00   0x00000a54   0x00000005   Data   RW            9    .data               lab12.o
-    0x1ffffc05   0x00000a59   0x00000003   PAD
-    0x1ffffc08   0x00000a5c   0x000000d0   Data   RW           77    MyData              lab12_1.o
+    0x1ffffc00   0x00000a84   0x00000005   Data   RW            9    .data               lab12.o
+    0x1ffffc05   0x00000a89   0x00000003   PAD
+    0x1ffffc08   0x00000a8c   0x000000d0   Data   RW           77    MyData              lab12_1.o
 
 
-    Execution Region ER_ZI (Exec base: 0x1ffffcd8, Load base: 0x00000b2c, Size: 0x00000160, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_ZI (Exec base: 0x1ffffcd8, Load base: 0x00000b5c, Size: 0x00000160, Max: 0xffffffff, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -587,15 +588,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-       840        172         68          5          0       5125   lab12.o
+       872        168         68          5          0       5175   lab12.o
        968        170          0        208          0       1784   lab12_1.o
         68         38        192          0        256        884   startup_mkl05z4.o
        140         24          0          0          0        501   system_mkl05z4.o
 
     ----------------------------------------------------------------------
-      2016        404        300        216        256       8294   Object Totals
+      2072        424        292        216        256       8344   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-         0          0          8          3          0          0   (incl. Padding)
+        24         24          0          3          0          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -643,15 +644,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      2344        420        300        216        352       8590   Grand Totals
-      2344        420        300        216        352       8590   ELF Image Totals
-      2344        420        300        216          0          0   ROM Totals
+      2400        440        292        216        352       8596   Grand Totals
+      2400        440        292        216        352       8596   ELF Image Totals
+      2400        440        292        216          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                 2644 (   2.58kB)
+    Total RO  Size (Code + RO Data)                 2692 (   2.63kB)
     Total RW  Size (RW Data + ZI Data)               568 (   0.55kB)
-    Total ROM Size (Code + RO Data + RW Data)       2860 (   2.79kB)
+    Total ROM Size (Code + RO Data + RW Data)       2908 (   2.84kB)
 
 ==============================================================================
 
