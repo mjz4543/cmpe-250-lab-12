@@ -526,7 +526,7 @@ ARM Macro Assembler    Page 9 Program Title for Listing Header Goes Here
 
   307 00000000                 EXPORT           PutChar
   308 00000000                 EXPORT           PutNumHex
-  309 00000000                 EXPORT           PutNumUB
+  309 00000000                 EXPORT           PutNumU
   310 00000000                 EXPORT           PutStringSB
   311 00000000                 EXPORT           UART0_IRQHandler
   312 00000000                 EXPORT           PIT_IRQHandler
@@ -1848,12 +1848,11 @@ ARM Macro Assembler    Page 29 Program Title for Listing Header Goes Here
  1153 000000D0         ;>>>>>   end variables here <<<<<
  1154 000000D0                 END
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M0+ --apcs=inter
-work --depend=.\objects\lab12_1.d -o.\objects\lab12_1.o -I.\RTE\_Target_1 -I"C:
-\Program Files (x86)\Keil v5\ARM\PACK\ARM\CMSIS\5.0.1\CMSIS\Include" -I"C:\Prog
-ram Files (x86)\Keil v5\ARM\PACK\Keil\Kinetis_KLxx_DFP\1.14.0\Device\Include" -
--predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 524" --predefine
-="_RTE_ SETA 1" --predefine="MKL05Z32xxx4 SETA 1" --list=.\listings\lab12.lst l
-ab12.s
+work --depend=.\objects\lab12_1.d -o.\objects\lab12_1.o -I.\RTE\_Target_1 -IC:\
+Keil_v5\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include -IC:\Keil_v5\ARM\PACK\Keil\
+Kinetis_KLxx_DFP\1.14.0\Device\Include --predefine="__EVAL SETA 1" --predefine=
+"__UVISION_VERSION SETA 524" --predefine="_RTE_ SETA 1" --predefine="MKL05Z32xx
+x4 SETA 1" --list=.\listings\lab12.lst lab12.s
 
 
 
@@ -2286,16 +2285,17 @@ Symbol: PutNumU
    Definitions
       At line 950 in file lab12.s
    Uses
+      At line 309 in file lab12.s
       At line 859 in file lab12.s
-Comment: PutNumU used once
+
 PutNumUB 0000022C
 
 Symbol: PutNumUB
    Definitions
       At line 846 in file lab12.s
    Uses
-      At line 309 in file lab12.s
-Comment: PutNumUB used once
+      None
+Comment: PutNumUB unused
 PutStringEnd 0000027A
 
 Symbol: PutStringEnd
@@ -2308,13 +2308,13 @@ PutStringLoop 0000026A
 
 Symbol: PutStringLoop
    Definitions
-      At line 932 in file lab12.s
 
 
 
 ARM Macro Assembler    Page 8 Alphabetic symbol ordering
 Relocatable symbols
 
+      At line 932 in file lab12.s
    Uses
       At line 940 in file lab12.s
 Comment: PutStringLoop used once
@@ -2373,13 +2373,13 @@ Symbol: ToUpEnd
       At line 1058 in file lab12.s
    Uses
       At line 1053 in file lab12.s
-      At line 1055 in file lab12.s
 
 
 
 ARM Macro Assembler    Page 9 Alphabetic symbol ordering
 Relocatable symbols
 
+      At line 1055 in file lab12.s
 
 ToUpperChar 000002E6
 

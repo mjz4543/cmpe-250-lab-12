@@ -3,11 +3,11 @@
 <title>Static Call Graph - [.\Objects\lab11.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\lab11.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Mon Nov 25 17:57:23 2024
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Tue Nov 26 15:16:53 2024
 <BR><P>
-<H3>Maximum Stack Usage =        208 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        224 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
-__rt_entry_main &rArr; main &rArr; RandomLEDColor
+__rt_entry_main &rArr; main &rArr; AddScore &rArr; __aeabi_idivmod
 <P>
 <H3>
 Functions with no stack information
@@ -184,8 +184,8 @@ Global Symbols
 <P><STRONG><a name="[7c]"></a>__rt_entry_postsh_1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$00000009))
 
 <P><STRONG><a name="[39]"></a>__rt_entry_main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __rtentry2.o(.ARM.Collect$$rtentry$$0000000D))
-<BR><BR>[Stack]<UL><LI>Max Depth = 208 + Unknown Stack Size
-<LI>Call Chain = __rt_entry_main &rArr; main &rArr; RandomLEDColor
+<BR><BR>[Stack]<UL><LI>Max Depth = 224 + Unknown Stack Size
+<LI>Call Chain = __rt_entry_main &rArr; main &rArr; AddScore &rArr; __aeabi_idivmod
 </UL>
 <BR>[Calls]<UL><LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;exit
 <LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -207,7 +207,7 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[3f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_sys_exit
 </UL>
 
-<P><STRONG><a name="[55]"></a>__aeabi_memcpy4</STRONG> (Thumb, 56 bytes, Stack size 0 bytes, rt_memcpy.o(.emb_text))
+<P><STRONG><a name="[56]"></a>__aeabi_memcpy4</STRONG> (Thumb, 56 bytes, Stack size 0 bytes, rt_memcpy.o(.emb_text))
 <BR><BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
@@ -350,11 +350,23 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[36]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
 </UL>
 
-<P><STRONG><a name="[80]"></a>__use_two_region_memory</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
+<P><STRONG><a name="[80]"></a>__aeabi_uidiv</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, aeabi_sdiv.o(.text), UNUSED)
 
-<P><STRONG><a name="[81]"></a>__rt_heap_escrow$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
+<P><STRONG><a name="[81]"></a>__aeabi_uidivmod</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, aeabi_sdiv.o(.text), UNUSED)
 
-<P><STRONG><a name="[82]"></a>__rt_heap_expand$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
+<P><STRONG><a name="[82]"></a>__aeabi_idiv</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, aeabi_sdiv.o(.text), UNUSED)
+
+<P><STRONG><a name="[44]"></a>__aeabi_idivmod</STRONG> (Thumb, 326 bytes, Stack size 8 bytes, aeabi_sdiv.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = __aeabi_idivmod
+</UL>
+<BR>[Called By]<UL><LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AddScore
+</UL>
+
+<P><STRONG><a name="[83]"></a>__use_two_region_memory</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
+
+<P><STRONG><a name="[84]"></a>__rt_heap_escrow$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
+
+<P><STRONG><a name="[85]"></a>__rt_heap_expand$2region</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
 
 <P><STRONG><a name="[36]"></a>__user_setup_stackheap</STRONG> (Thumb, 62 bytes, Stack size 8 bytes, sys_stackheap_outer.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8 + Unknown Stack Size
@@ -376,51 +388,40 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>
 
-<P><STRONG><a name="[83]"></a>__user_libspace</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, libspace.o(.text), UNUSED)
+<P><STRONG><a name="[86]"></a>__user_libspace</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, libspace.o(.text), UNUSED)
 
 <P><STRONG><a name="[40]"></a>__user_perproc_libspace</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, libspace.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[36]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
 </UL>
 
-<P><STRONG><a name="[84]"></a>__user_perthread_libspace</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, libspace.o(.text), UNUSED)
+<P><STRONG><a name="[87]"></a>__user_perthread_libspace</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, libspace.o(.text), UNUSED)
 
 <P><STRONG><a name="[3f]"></a>_sys_exit</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, sys_exit.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[3e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_exit_exit
 </UL>
 
-<P><STRONG><a name="[85]"></a>__I$use$semihosting</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, use_no_semi.o(.text), UNUSED)
+<P><STRONG><a name="[88]"></a>__I$use$semihosting</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, use_no_semi.o(.text), UNUSED)
 
-<P><STRONG><a name="[86]"></a>__use_no_semihosting_swi</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, use_no_semi.o(.text), UNUSED)
+<P><STRONG><a name="[89]"></a>__use_no_semihosting_swi</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, use_no_semi.o(.text), UNUSED)
 
-<P><STRONG><a name="[87]"></a>__semihosting_library_function</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, indicate_semi.o(.text), UNUSED)
+<P><STRONG><a name="[8a]"></a>__semihosting_library_function</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, indicate_semi.o(.text), UNUSED)
 
-<P><STRONG><a name="[5b]"></a>AddScore</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, lab12.o(i.AddScore))
-<BR><BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<P><STRONG><a name="[43]"></a>AddScore</STRONG> (Thumb, 34 bytes, Stack size 16 bytes, lab12.o(i.AddScore))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = AddScore &rArr; __aeabi_idivmod
+</UL>
+<BR>[Calls]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_idivmod
+</UL>
+<BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[43]"></a>ColToInt</STRONG> (Thumb, 52 bytes, Stack size 8 bytes, lab12.o(i.ColToInt))
+<P><STRONG><a name="[45]"></a>ColToInt</STRONG> (Thumb, 52 bytes, Stack size 8 bytes, lab12.o(i.ColToInt))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = ColToInt
 </UL>
-<BR>[Calls]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ToUpperChar
+<BR>[Calls]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ToUpperChar
 </UL>
 <BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[53]"></a>InitLEDs</STRONG> (Thumb, 48 bytes, Stack size 0 bytes, lab12.o(i.InitLEDs))
-<BR><BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-</UL>
-
-<P><STRONG><a name="[45]"></a>RandomLEDColor</STRONG> (Thumb, 140 bytes, Stack size 8 bytes, lab12.o(i.RandomLEDColor))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = RandomLEDColor
-</UL>
-<BR>[Calls]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetCount
-</UL>
-<BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-</UL>
-
-<P><STRONG><a name="[2b]"></a>SystemInit</STRONG> (Thumb, 116 bytes, Stack size 0 bytes, system_mkl05z4.o(i.SystemInit))
-<BR>[Address Reference Count : 1]<UL><LI> startup_mkl05z4.o(.text)
-</UL>
 <P><STRONG><a name="[17]"></a>UART0_IRQHandler</STRONG> (Thumb, 58 bytes, Stack size 0 bytes, lab12_1.o(MyCode))
 <BR><BR>[Calls]<UL><LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Enqueue
 <LI><a href="#[47]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Dequeue
@@ -436,27 +437,28 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[54]"></a>InitPIT</STRONG> (Thumb, 64 bytes, Stack size 0 bytes, lab12_1.o(MyCode))
+<P><STRONG><a name="[55]"></a>InitPIT</STRONG> (Thumb, 64 bytes, Stack size 0 bytes, lab12_1.o(MyCode))
 <BR><BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
 <P><STRONG><a name="[4b]"></a>GetChar</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, lab12_1.o(MyCode), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[47]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Dequeue
 </UL>
-<BR>[Called By]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetStringSB
+<BR>[Called By]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetStringSB
 </UL>
 
-<P><STRONG><a name="[57]"></a>IsKeyPressed</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, lab12_1.o(MyCode))
+<P><STRONG><a name="[58]"></a>IsKeyPressed</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, lab12_1.o(MyCode))
 <BR><BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
 <P><STRONG><a name="[4c]"></a>PutChar</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, lab12_1.o(MyCode))
 <BR><BR>[Calls]<UL><LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Enqueue
 </UL>
-<BR>[Called By]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetStringSB
+<BR>[Called By]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetStringSB
 <LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutNumHex
-<LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutNumU
-<LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutStringSB
+<LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutStringSB
+<LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutNumU
+<LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
 <P><STRONG><a name="[47]"></a>Dequeue</STRONG> (Thumb, 62 bytes, Stack size 0 bytes, lab12_1.o(MyCode))
@@ -466,70 +468,89 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[4d]"></a>PutNumHex</STRONG> (Thumb, 52 bytes, Stack size 0 bytes, lab12_1.o(MyCode), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutChar
+<BR><BR>[Calls]<UL><LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutNumU
+<LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutChar
 </UL>
 
-<P><STRONG><a name="[4e]"></a>PutNumUB</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, lab12_1.o(MyCode))
-<BR><BR>[Calls]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutNumU
-</UL>
-<BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-</UL>
-
-<P><STRONG><a name="[50]"></a>GetStringSB</STRONG> (Thumb, 44 bytes, Stack size 0 bytes, lab12_1.o(MyCode), UNUSED)
-<BR><BR>[Calls]<UL><LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutChar
-<LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetChar
+<P><STRONG><a name="[4f]"></a>GetStringSB</STRONG> (Thumb, 44 bytes, Stack size 0 bytes, lab12_1.o(MyCode), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetChar
+<LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutChar
 </UL>
 
-<P><STRONG><a name="[51]"></a>PutStringSB</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, lab12_1.o(MyCode))
+<P><STRONG><a name="[50]"></a>PutStringSB</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, lab12_1.o(MyCode))
 <BR><BR>[Calls]<UL><LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutChar
 </UL>
 <BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[44]"></a>ToUpperChar</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, lab12_1.o(MyCode))
-<BR><BR>[Called By]<UL><LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ColToInt
+<P><STRONG><a name="[4e]"></a>PutNumU</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, lab12_1.o(MyCode))
+<BR><BR>[Calls]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DIVU
+<LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutChar
+</UL>
+<BR>[Called By]<UL><LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutNumHex
+<LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[46]"></a>GetCount</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, lab12_1.o(MyCode))
+<P><STRONG><a name="[46]"></a>ToUpperChar</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, lab12_1.o(MyCode))
+<BR><BR>[Called By]<UL><LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ColToInt
+</UL>
+
+<P><STRONG><a name="[53]"></a>GetCount</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, lab12_1.o(MyCode))
 <BR><BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RandomLEDColor
+<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RandomLEDColor
 </UL>
 
-<P><STRONG><a name="[5a]"></a>SetCount</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, lab12_1.o(MyCode))
-<BR><BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-</UL>
-
-<P><STRONG><a name="[56]"></a>StartTimer</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, lab12_1.o(MyCode))
-<BR><BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-</UL>
-
-<P><STRONG><a name="[58]"></a>StopTimer</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, lab12_1.o(MyCode))
-<BR><BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-</UL>
-
-<P><STRONG><a name="[59]"></a>GetRxQueueRecord</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, lab12_1.o(MyCode))
+<P><STRONG><a name="[5b]"></a>SetCount</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, lab12_1.o(MyCode))
 <BR><BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[3a]"></a>main</STRONG> (Thumb, 440 bytes, Stack size 200 bytes, lab12.o(i.main))
-<BR><BR>[Stack]<UL><LI>Max Depth = 208<LI>Call Chain = main &rArr; RandomLEDColor
+<P><STRONG><a name="[57]"></a>StartTimer</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, lab12_1.o(MyCode))
+<BR><BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
-<BR>[Calls]<UL><LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
-<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StopTimer
-<LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartTimer
-<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetCount
-<LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutStringSB
-<LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutNumUB
-<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsKeyPressed
+
+<P><STRONG><a name="[59]"></a>StopTimer</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, lab12_1.o(MyCode))
+<BR><BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[5a]"></a>GetRxQueueRecord</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, lab12_1.o(MyCode))
+<BR><BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[54]"></a>InitLEDs</STRONG> (Thumb, 48 bytes, Stack size 0 bytes, lab12.o(i.InitLEDs))
+<BR><BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[52]"></a>RandomLEDColor</STRONG> (Thumb, 140 bytes, Stack size 8 bytes, lab12.o(i.RandomLEDColor))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = RandomLEDColor
+</UL>
+<BR>[Calls]<UL><LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetCount
+</UL>
+<BR>[Called By]<UL><LI><a href="#[3a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[2b]"></a>SystemInit</STRONG> (Thumb, 116 bytes, Stack size 0 bytes, system_mkl05z4.o(i.SystemInit))
+<BR>[Address Reference Count : 1]<UL><LI> startup_mkl05z4.o(.text)
+</UL>
+<P><STRONG><a name="[3a]"></a>main</STRONG> (Thumb, 462 bytes, Stack size 200 bytes, lab12.o(i.main))
+<BR><BR>[Stack]<UL><LI>Max Depth = 224<LI>Call Chain = main &rArr; AddScore &rArr; __aeabi_idivmod
+</UL>
+<BR>[Calls]<UL><LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StopTimer
+<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;StartTimer
+<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SetCount
+<LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutStringSB
+<LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutNumU
+<LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutChar
+<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IsKeyPressed
 <LI><a href="#[49]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitUART0
-<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitPIT
-<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetRxQueueRecord
-<LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetCount
+<LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitPIT
+<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetRxQueueRecord
+<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GetCount
 <LI><a href="#[47]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Dequeue
-<LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RandomLEDColor
-<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitLEDs
-<LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ColToInt
-<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AddScore
+<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;RandomLEDColor
+<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitLEDs
+<LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ColToInt
+<LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AddScore
 </UL>
 <BR>[Called By]<UL><LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>
@@ -542,19 +563,12 @@ Local Symbols
 </UL>
 
 <P><STRONG><a name="[48]"></a>Enqueue</STRONG> (Thumb, 66 bytes, Stack size 0 bytes, lab12_1.o(MyCode))
-<BR><BR>[Called By]<UL><LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutChar
-<LI><a href="#[17]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART0_IRQHandler
+<BR><BR>[Called By]<UL><LI><a href="#[17]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART0_IRQHandler
+<LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutChar
 </UL>
 
-<P><STRONG><a name="[4f]"></a>PutNumU</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, lab12_1.o(MyCode))
-<BR><BR>[Calls]<UL><LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutChar
-<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DIVU
-</UL>
-<BR>[Called By]<UL><LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutNumUB
-</UL>
-
-<P><STRONG><a name="[52]"></a>DIVU</STRONG> (Thumb, 66 bytes, Stack size 0 bytes, lab12_1.o(MyCode))
-<BR><BR>[Called By]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutNumU
+<P><STRONG><a name="[51]"></a>DIVU</STRONG> (Thumb, 66 bytes, Stack size 0 bytes, lab12_1.o(MyCode))
+<BR><BR>[Called By]<UL><LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PutNumU
 </UL>
 <P>
 <H3>

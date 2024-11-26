@@ -57,9 +57,9 @@ int main (void) {
 	InitPIT();
   __asm("CPSIE   I");  /* unmask interrupts */
 
-	char WrongStr[10] = ":\tWrong\t\0";
+	char WrongStr[10] = "\tWrong\t\0";
 	char InStr[4] = "\n\r>\0";
-	char TimeOutStr[28] = ":\tOut of time--color was \0";
+	char TimeOutStr[28] = "\tOut of time--color was \0";
 	char Cols[4][6] = {"Red\0", "Green\0", "Blue\0", "White\0"};
 	char PlayStr[] = "\n\rPlay LED Game Guessing Game (Press Any Key): \0";
 	char GStr[] = "\n\rGuess (R,G,B,W)\0";
@@ -87,6 +87,9 @@ int main (void) {
 
 		for(int Round = 1; Round <= Rounds; Round++)
 		{
+			PutStringSB("\n\rRound: \0", MAX_STRING);
+			PutNumU(Round);
+			
 			//print input stuff
 			PutStringSB(InStr, MAX_STRING);
 			
@@ -101,10 +104,13 @@ int main (void) {
 			waitloop:			
 			while(GetCount() < ((RoundTime - Round) * 100))
 			{
+				
 				char keypressed = IsKeyPressed();
 				if(!keypressed){ goto waitloop; } // if no key is pressed, loop again
 				
-				int guess = ColToInt(Dequeue(0, GetRxQueueRecord(), 79));
+				char c = Dequeue(0, GetRxQueueRecord(), 79);
+				PutChar(c);
+				int guess = ColToInt(c);
 				if(guess == RandomSeed)
 				{
 						RandomSeed = GetCount();
@@ -132,7 +138,7 @@ int main (void) {
 		}
 		//end of game, print final score
 		PutStringSB(ScStr, MAX_STRING);
-		PutNumUB(Score);
+		PutNumU(Score);
 		
 	} /* do forever */
 
@@ -207,5 +213,5 @@ void InitLEDs(void){
 // Returns: void
 //***********************************************
 void AddScore(int TimeElapsed, int RoundNumber){
-	Score += RoundNumber * (((11 - RoundNumber) * 100) - TimeElapsed);
+	Score += RoundNumber*((11 - RoundNumber) - (UInt16)(TimeElapsed/100));
 }
