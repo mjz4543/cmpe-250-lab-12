@@ -21,13 +21,37 @@ Target DLL:      CMSIS_AGDI.dll V1.28.3.0
 Dialog DLL:      TARMCM1.DLL V1.13.0.0
  
 <h2>Project:</h2>
-D:\CMPE 250\cmpe-250-lab-12\lab12.uvprojx
+E:\CMPE 250\cmpe-250-lab-12\lab12.uvprojx
 Project File Date:  11/19/2024
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'Target 1'
-".\Objects\lab11.axf" - 0 Error(s), 0 Warning(s).
+compiling lab12.c...
+lab12.c(61): warning:  #177-D: variable "WrongStr"  was declared but never referenced
+  	char WrongStr[10] = "\tWrong\t\0";
+lab12.c(62): warning:  #177-D: variable "InStr"  was declared but never referenced
+  	char InStr[4] = "\n\r>\0";
+lab12.c(63): warning:  #177-D: variable "TimeOutStr"  was declared but never referenced
+  	char TimeOutStr[28] = "\tOut of time--color was \0";
+lab12.c(64): warning:  #177-D: variable "Cols"  was declared but never referenced
+  	char Cols[7][9] = {"Red\0", "Green\0", "Blue\0", "Purple\0", "Orange\0","Cyan\0","Magenta\0"};
+lab12.c(65): warning:  #177-D: variable "PlayStr"  was declared but never referenced
+  	char PlayStr[] = "\n\rPlay LED Game Guessing Game (Press Any Key): \0";
+lab12.c(66): warning:  #177-D: variable "GStr"  was declared but never referenced
+  	char GStr[] = "\n\rGuess (R, G, B, P, O, C, M)\0";
+lab12.c(67): warning:  #177-D: variable "ScStr"  was declared but never referenced
+  	char ScStr[] = "\n\rFinal Score: ";
+lab12.c(68): warning:  #177-D: variable "RStr"  was declared but never referenced
+  	char RStr[] = "\tCorrect--color was \0";
+lab12.c(75): warning:  #177-D: variable "Rounds"  was declared but never referenced
+  	const int Rounds = 10;
+lab12.c(76): warning:  #177-D: variable "RoundTime"  was declared but never referenced
+  	const int RoundTime = 11; // (seconds)
+lab12.c: 10 warnings, 0 errors
+linking...
+Program Size: Code=1920 RO-data=440 RW-data=216 ZI-data=352  
+".\Objects\lab11.axf" - 0 Error(s), 10 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -51,11 +75,11 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: Keil::Device:Startup:1.0.0
-      Source file:   Device\Source\ARM\startup_MKL05Z4.s
       Source file:   Device\Source\system_MKL05Z4.c
+      Source file:   Device\Source\ARM\startup_MKL05Z4.s
 
    * Component: ARM::CMSIS:CORE:5.6.0
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:04
 </pre>
 </body>
 </html>

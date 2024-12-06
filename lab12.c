@@ -15,6 +15,7 @@
 #define TRUE       (1)
 
 #define MAX_STRING (79)
+#define NUM_COLS (7)
 
 /* LEDs */
 #define POS_RED (8)
@@ -60,22 +61,39 @@ int main (void) {
 	char WrongStr[10] = "\tWrong\t\0";
 	char InStr[4] = "\n\r>\0";
 	char TimeOutStr[28] = "\tOut of time--color was \0";
-	char Cols[4][6] = {"Red\0", "Green\0", "Blue\0", "White\0"};
+	char Cols[7][9] = {"Red\0", "Green\0", "Blue\0", "Purple\0", "Orange\0","Cyan\0","Magenta\0"};
 	char PlayStr[] = "\n\rPlay LED Game Guessing Game (Press Any Key): \0";
-	char GStr[] = "\n\rGuess (R,G,B,W)\0";
+	char GStr[] = "\n\rGuess (R, G, B, P, O, C, M)\0";
 	char ScStr[] = "\n\rFinal Score: ";
 	char RStr[] = "\tCorrect--color was \0";
 	int	 ColMasks[] = {PORTB_LED_RED_MASK, PORTB_LED_GREEN_MASK, 
-													PORTB_LED_BLUE_MASK, PORTB_LEDS_MASK};
+													PORTB_LED_BLUE_MASK, PORTB_LEDS_MASK, 
+													PORTB_LED_RED_MASK | PORTB_LED_GREEN_MASK, 
+													PORTB_LED_BLUE_MASK | PORTB_LED_GREEN_MASK,
+													PORTB_LED_RED_MASK | PORTB_LED_BLUE_MASK};
+	int Rainbow[7] = {0,4,1,5,2,3,6};
 	const int Rounds = 10;
 	const int RoundTime = 11; // (seconds)
 	
   for (;;) { /* do forever */
 	
 		//game loop start
+		
+		SetCount(0);
+		StartTimer();
+		//rainbow animation
+		for(int i = 0; i<7; i++)
+		{
+			while(GetCount() < 10) {}
+			FPTB->PCOR = ColMasks[Rainbow[i]];
+			FPTB->PSOR = ColMasks[3];
+			SetCount(0);
+		}
+		
+		
 		Score = 0;
 		FPTB->PSOR = ColMasks[3];
-		PutStringSB(PlayStr, MAX_STRING);
+/*		PutStringSB(PlayStr, MAX_STRING);
 		
 		StartTimer();
 		while(!IsKeyPressed())
@@ -138,8 +156,7 @@ int main (void) {
 		}
 		//end of game, print final score
 		PutStringSB(ScStr, MAX_STRING);
-		PutNumU(Score);
-		
+		PutNumU(Score);*/
 	} /* do forever */
 
 } /* main */
@@ -158,7 +175,7 @@ int RandomLEDColor(void){
 	RandomSeed -= (RandomSeed << 3);
 	RandomSeed ^= (RandomSeed << 10);
 	RandomSeed ^= (RandomSeed >> 15);
-	return RandomSeed %= 4;
+	return RandomSeed %= NUM_COLS;
 }
 
 //***********************************************
@@ -176,8 +193,14 @@ int ColToInt(char c) {
 			return 1;
 		case 'B':
 			return 2;
-		case 'W':
+		case 'P':
 			return 3;
+		case 'O':
+			return 4;
+		case 'C':
+			return 5;
+		case 'M':
+			return 6;
 		default:
 			return -1;
 	}
